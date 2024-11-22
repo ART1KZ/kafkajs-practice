@@ -1,20 +1,22 @@
 import { Kafka } from "kafkajs"
 
 const kafka = new Kafka({
-    clientId: 'telegram-bot',
-    brokers: ['localhost:9092'],
-    connectionTimeout: 3000,
-    requestTimeout: 25000, 
-  })
+  clientId: 'telegram-bot',
+  brokers: ['192.168.202.8:9092'],
+  // connectionTimeout: 30000, 
+  // requestTimeout: 30000, 
+})
 
-const consumer = kafka.consumer({ groupId: 'telegram-bot-messages' })
+const consumer = kafka.consumer({ groupId: 'timetable-consumers' })
 
 await consumer.connect()
-await consumer.subscribe({ topic: 'update_messages', fromBeginning: true })
+await consumer.subscribe({ topic: 'timetable-updates', fromBeginning: true })
 
 await consumer.run({
   eachMessage: async ({ topic, partition, message }) => {
     console.log({
+      partition: partition.toString(),
+      topic_name: topic,
       value: message.value.toString(),
     })
   },

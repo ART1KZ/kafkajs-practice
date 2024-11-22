@@ -1,18 +1,29 @@
-import { Kafka } from "kafkajs"
+import { Kafka } from 'kafkajs';
 
 const kafka = new Kafka({
   clientId: 'timetable-backend',
-  brokers: ['localhost:9092'],
-})
+  brokers: ['192.168.202.8:9092'],
+});
 
-const producer = kafka.producer()
+const producer = kafka.producer();
 
-await producer.connect()
-await producer.send({
-  topic: 'update_messages',
-  messages: [
-    { value: 'Hello KafkaJS user!' },
-  ],
-})
+const run = async () => {
+  await producer.connect();
 
-await producer.disconnect()
+  try {
+    const result = await producer.send({
+      topic: 'timetable-updates',
+      messages: [
+        { value: 'test timetable update message #2' },
+        { value: 'test timetable update message #3'}
+      ],
+    });
+    console.log('Message sent successfully:', result);
+  } catch (error) {
+    console.error('Failed to send message:', error);
+  }
+
+  await producer.disconnect();
+};
+
+run().catch(console.error);
