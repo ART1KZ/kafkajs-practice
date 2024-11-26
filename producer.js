@@ -1,8 +1,12 @@
 import { Kafka } from 'kafkajs';
-
 const kafka = new Kafka({
   clientId: 'timetable-backend',
   brokers: ['192.168.202.8:9092'],
+  sasl: {
+    mechanism: 'plain', // Указываем механизм SASL
+    username: 'producer', // Имя пользователя для аутентификации
+    password: process.env.KAFKA_PRODUCER_PASSWORD // Пароль для аутентификации
+  }
 });
 
 const producer = kafka.producer();

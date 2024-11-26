@@ -4,15 +4,16 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "node index.js",
-    "dev": "nodemon index.js",
-    "producer": "node producer.js",
-    "consumer": "node consumer.js"
+    "start": "node -r dotenv/config index.js",
+    "dev": "nodemon -r dotenv/config index.js",
+    "producer": "node -r dotenv/config producer.js",
+    "consumer": "node -r dotenv/config consumer.js"
   },
   "author": "",
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "dotenv": "^16.4.5",
     "kafkajs": "^2.2.4"
   }
 }

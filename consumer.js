@@ -3,6 +3,12 @@ import { Kafka } from "kafkajs"
 const kafka = new Kafka({
   clientId: 'telegram-bot',
   brokers: ['192.168.202.8:9092'],
+  ssl: false,
+  sasl: {
+    mechanism: 'plain',
+    username: 'consumer', 
+    password: process.env.KAFKA_CONSUMER_PASSWORD
+  }
   // connectionTimeout: 30000, 
   // requestTimeout: 30000, 
 })
